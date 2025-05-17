@@ -78,7 +78,7 @@ public class RoomAdventure{ // Main class containing game logic
         );
         Item key = new Item(
             "key", 
-            "This is a tiny key. I wonder what this could possibly open.", 
+            "The key looks complex and is made from copper. I wonder what this could possibly open.", 
             false, 
             false, 
             true
