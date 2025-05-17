@@ -54,16 +54,41 @@ public class RoomAdventure{ // Main class containing game logic
         }
     }
 
+
     private static void setupGame() { //init game world
         Room room1 = new Room("Room 1"); // Create room 1
         Room room2 = new Room("Room 2"); // Create room 2
-        
-        String[] room1ExitDirections = {"east"}; // Exit directions for room 1
-        Room[] room1ExitDestinations = {room2}; // Exit destinations for room 1
-        String[] room1Items = {"chair", "desk"}; // Items in room 1
+        Room room3 = new Room("Room 3"); // Create room 3
+        Room room4 = new Room("Room 4"); // Create room 4
+
+        // Room 1 Items
+        Item chair = new Item("chair", "This is a chair", false, false, false);
+        Item desk = new Item("desk", "This is a desk", false, false, false);
+        Item key = new Item("key", "This is a key", false, false, true);
+        // Room 2 Items
+        Item fireplace = new Item(
+            "fireplace",
+            "This is a fireplace", 
+            false, 
+            false, 
+            false);
+        Item rug = new Item("rug", "This is a rug", false, false, false);
+        Item coal = new Item("coal", "This is coal", false, false, true);
+        // Room 3 Items
+        Item bookshelves = new Item("bookshelves", "There is a book on one of the shelves", false, false, true);
+        Item statue = new Item("statue", "This is a statue", false, false, false);
+        Item desk2 = new Item("desk", "This is a desk", false, false, false);
+        Item book = new Item(
+        // Room 4 Items
+
+        // ################################# Room 1 #################################
+
+        String[] room1ExitDirections = {"east", "south"}; // Exit directions for room 1
+        Room[] room1ExitDestinations = {room2, room4}; // Exit destinations for room 1
+        String[] room1Items = {chair.getItemName(), desk.getItemName()}; // Items in room 1
         String[] room1ItemDescriptions = {
-            "A wooden chair", 
-            "A wooden desk"
+            chair.getItemDescription(), 
+            desk.getItemDescription()
         }; // Item descriptions for room 1
 
         String[] room1Grabbables = {"key"}; // items in room 1 you can take
@@ -73,10 +98,10 @@ public class RoomAdventure{ // Main class containing game logic
         room1.setItemDescriptions(room1ItemDescriptions); // Set item descriptions for room 1
         room1.setGrabbables(room1Grabbables); // Set grabbables for room 1
 
-        // Room 2
-        
-        String[] room2ExitDirections = {"west"}; // Exit directions for room 2
-        Room[] room2ExitDestinations = {room1}; // Exit destinations for room 2
+        // ################################# Room 2 #################################
+
+        String[] room2ExitDirections = {"west", "south"}; // Exit directions for room 2
+        Room[] room2ExitDestinations = {room1, room3}; // Exit destinations for room 2
         String[] room2Items = {"fireplace", "rug"}; // Items in room 2
         String[] room2ItemDescriptions = {
             "Its on fire",
@@ -89,9 +114,45 @@ public class RoomAdventure{ // Main class containing game logic
         room2.setItemDescriptions(room2ItemDescriptions); // Set item descriptions for room 2
         room2.setGrabbables(room2Grabbables); // Set grabbables for room 2
 
+        // ################################# Room 3 #################################
+
+        String[] room3ExitDirections = {"north", "west"}; // Exit directions for room 3
+        Room[] room3ExitDestinations = {room2, room4}; // Exit destinations for room 3
+        String[] room3Items = {"bookshelves", "statue", "desk"}; // Items in room 3
+        String[] room3ItemDescriptions = {
+            "They are empty. Go Figure.", 
+            "There is nothing special about it.",
+            "The statue is resting on it. So is a book."
+        }; // Item descriptions for room 3
+
+        String[] room3Grabbables = {"book"}; // items in room 3 you can take
+        room3.setExitDirections(room3ExitDirections); // Set exit directions for room 3
+        room3.setExitDestinations(room3ExitDestinations); // Set exit destinations for room 3
+        room3.setItems(room3Items); // Set items for room 3
+        room3.setItemDescriptions(room3ItemDescriptions); // Set item descriptions for room 3
+        room3.setGrabbables(room3Grabbables); // Set grabbables for room 3
+
+         // ################################# Room 4 #################################
+
+        String[] room4ExitDirections = {"east", "north"}; // Exit directions for room 4
+        Room[] room4ExitDestinations = {room3, room1}; // Exit destinations for room 4
+        String[] room4Items = {"brew_rig", "chest"}; // Items in room 4
+        String[] room4ItemDescriptions = {
+            "Gourd is brewing some sort of oatmeal stout on the brewrig. A 6-pack is resting beside it.", 
+            "It is made of a dark oak. It is locked. Maybe USE a key to open it."
+        }; // Item descriptions for room 4
+
+        String[] room4Grabbables = {"6-pack"}; // items in room 4 you can take
+        room4.setExitDirections(room4ExitDirections); // Set exit directions for room 4
+        room4.setExitDestinations(room4ExitDestinations); // Set exit destinations for room 4
+        room4.setItems(room4Items); // Set items for room 4
+        room4.setItemDescriptions(room4ItemDescriptions); // Set item descriptions for room 4
+        room4.setGrabbables(room4Grabbables); // Set grabbables for room 4
+
         // Set the current room to room 1
         currentRoom = room1; // Set the current room to room 1
     }
+
 
     // @SuppressWarnings("java:52189") // Suppress warning for Scanner
     public static void main(String[] args) { //Entry point of the game
@@ -220,4 +281,66 @@ class Room{ // Represents a game room
         }
         return result + "\n"; //Return the full result
     }
+}
+
+
+
+class Item {
+    private String name;
+    private String description;
+    private boolean isEatable;
+    private boolean isDrinkable;
+    private boolean isGrabbable;
+
+    // constructor
+    public Item(String name, String description, boolean isEatable, boolean isDrinkable, boolean isGrabbable){
+        this.name = name;
+        this.description = description;
+        this.isEatable = isEatable;
+        this.isDrinkable = isDrinkable;
+        this.isGrabbable = isGrabbable;
+    }
+
+
+    // getters and setters
+     public String getItemName(){ 
+        return name; 
+    }
+
+    public void setItemName(String name){ 
+        this.name = name; 
+    }
+
+    public String getItemDescription(){ 
+        return description;
+    }
+
+    public void setItemDescriptions(String description){ 
+        this.description = description; 
+    }
+
+    public boolean getIsEatable(){
+        return isEatable;
+    }
+
+    public void setIsEatable(boolean isEatable){
+        this.isEatable = isEatable;
+    }
+
+    public boolean getIsDrinkable(){
+        return isDrinkable;
+    }
+
+    public void setIsDrinkable(boolean isDrinkable){
+        this.isDrinkable = isDrinkable;
+    }
+
+         public boolean getIsGrabbable(){ 
+        return isGrabbable; 
+    }
+
+    public void setIsGrabbable(boolean isGrabbable){ 
+        this.isGrabbable = isGrabbable; 
+    }
+
 }
