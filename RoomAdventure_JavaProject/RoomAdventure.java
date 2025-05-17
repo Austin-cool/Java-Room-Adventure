@@ -278,13 +278,42 @@ public class RoomAdventure{ // Main class containing game logic
                 case "go": // if verb is go
                     handleGo(noun); // go to another room
                     break;
+                case "walk": // if verb is walk
+                    handleGo(noun); // go to another room
+                    break;
+                case "run": // if verb is run
+                    handleGo(noun); // go to another room
+                    break;
+                
                 case "look": // if verb is look
                     handlelook(noun); // look at an item
                     break;
+                case "stare": // if verb is look
+                    handlelook(noun); // look at an stare
+                    break;
+                case "analyze": // if verb is analyze
+                    handlelook(noun); // look at an item
+                    break;
+                
                 case "take": // if verb is take
                     handleTake(noun); // take an item
                     break;
+                case "steal": // if verb is steal
+                    handleTake(noun); // take an item
+                    break;
+                case "grab": // if verb is steal
+                    handleTake(noun); // take an item
+                    break;
+                
                 case "end":  // If verb is end
+                    System.out.println("Closing game...");
+                    RUNNING = false;
+                    break;
+                case "leave":  // If verb is leave
+                    System.out.println("Closing game...");
+                    RUNNING = false;
+                    break;
+                case "close":  // If verb is close
                     System.out.println("Closing game...");
                     RUNNING = false;
                     break;
