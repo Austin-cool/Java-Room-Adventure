@@ -11,7 +11,7 @@ public class RoomAdventure{ // Main class containing game logic
     
     // Constants
     final private static String DEFUALT_STATUS =
-        "Sorry, I do not understand. Try {verb} {noun}. Valid verbs include 'go', 'look', and 'take'"; //Defualt error message
+        "Sorry, I do not understand. Try {verb} {noun}. Valid verbs include 'go', 'look', and 'take'. Type 'end game' to end game. "; //Defualt error message
 
     private static void handleGo(String noun) { // Handles moving between rooms
         String[] exitDirections = currentRoom.getExitDirections(); // Get the available directions
@@ -132,11 +132,13 @@ public class RoomAdventure{ // Main class containing game logic
         currentRoom = room1; // Set the current room to room 1
     }
 
-    @SuppressWarnings("java:52189") // Suppress warning for Scanner
+    // @SuppressWarnings("java:52189") // Suppress warning for Scanner
     public static void main(String[] args) { //Entry point of the game
         setupGame(); // Setup the game
+
+        boolean RUNNING = true;
         
-        while (true) { // Game loop, runs until program is terminated
+        while (RUNNING) { // Game loop, runs until program is terminated
             System.out.print(currentRoom.toString()); // Print the current room
             System.out.print("inventory: "); // Print the inventory
 
@@ -169,9 +171,13 @@ public class RoomAdventure{ // Main class containing game logic
                 case "take": // if verb is take
                     handleTake(noun); // take an item
                     break;
+                case "end":  // If verb is end
+                    System.out.println("Closing game...");
+                    RUNNING = false;
+                    break;
                 default: // if verb is not recognized
                     status = DEFUALT_STATUS; // Set status to default error message
-                    
+                
             }
 
             System.out.println(status); // Print the status message
@@ -236,7 +242,7 @@ class Room{ // Represents a game room
 // NOTE TO SELF: public void ...(type, varible){ // Setters
 // NOTE TO SELF: public type get...(type, varible){ // Getters
 
-    @Override //
+    // @Override 
     public String toString(){ // Custom print for the room
         String result = "\nLocation: " + name; //Show room name
         result += "\nYou See: "; // Show what you see
