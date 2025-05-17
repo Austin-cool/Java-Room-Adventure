@@ -54,6 +54,26 @@ public class RoomAdventure{ // Main class containing game logic
         }
     }
 
+    // private static void handleUse(String noun) {
+    //     status = "I can't use that item";
+    //     for (int i = 0; i < inventory.length; i++){
+    //         if(noun.equals(inventory[i])){
+    //             Item[] items = currentRoom.getItems();
+    //             for (Item item : items) {
+    //                 if (item.getItemName() == "fireplace" && (noun == "coal")) {
+    //                     badEnding();
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+
+    // private static void badEnding(){
+    //     System.out.println("Game over, YOU LOST!");
+    // }
+
+
 
     private static void setupGame() { //init game world
         Room room1 = new Room("Room 1"); // Create room 1
@@ -283,6 +303,9 @@ public class RoomAdventure{ // Main class containing game logic
                     break;
                 case "take": // if verb is take
                     handleTake(noun); // take an item
+                    break;
+                case "use":
+                    //handleUse(noun);
                     break;
                 case "end":  // If verb is end
                     System.out.println("Closing game...");
