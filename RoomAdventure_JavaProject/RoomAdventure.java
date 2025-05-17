@@ -64,29 +64,43 @@ public class RoomAdventure{ // Main class containing game logic
         // Room 1 Items
         Item chair = new Item(
             "chair", 
-            "This is a chair", 
+            "This is a wooden chair. It looks comfortable.", 
             false, 
             false, 
             false
         );
         Item desk = new Item(
             "desk",
-            "This is a desk", 
+            "This is a hardwood desk. It looks like lots of paperwork was done on it.", 
             false, 
             false, 
             false
         );
         Item key = new Item(
             "key", 
-            "This is a key", 
+            "This is a tiny key. I wonder what this could possibly open.", 
             false, 
             false, 
             true
         );
+        Item plant = new Item(
+            "plant",
+            "There is a small cactus on the desk. You're allergic to the prick of a cactus needle, so you might not want tograb this. Your call, though.",
+            false,
+            false,
+            true
+        );
+        Item painting = new Item(
+            "painting", 
+            "This is an old one. Probably from the Renaissance. You feel that you're not rich enough to even go near it.", 
+            false, 
+            false, 
+            false
+        );
         // Room 2 Items
         Item fireplace = new Item(
             "fireplace",
-            "Its on fire", 
+            "Its on fire. The meager flame hungers.", 
             false, 
             false, 
             false
@@ -100,40 +114,62 @@ public class RoomAdventure{ // Main class containing game logic
         );
         Item coal = new Item(
             "coal", 
-            "This is coal", 
+            "You hear the faint call of the meager flame beckoning you.", 
             false, 
             false, 
             true
         );
+        Item shovel = new Item(
+            "shovel", 
+            "You have no use for this.", 
+            false, 
+            false, 
+            false
+            );
+        Item couch = new Item(
+            "couch", 
+            "It looks comfy.", 
+            false, 
+            false, 
+            false
+            );
+
         // Room 3 Items
         Item bookshelves = new Item(
             "bookshelves", 
-            "There is nothing on it. Go figure.", 
+            "There is nothing on them. Go figure.", 
             false, 
             false, 
             true
         );
         Item statue = new Item(
             "statue",
-            "This is a statue", 
+            "The statue is one of a knight. It brandishes its sword as if prepared to fight.", 
             false, 
             false, 
             false
         );
-        Item desk2 = new Item(
-            "desk", 
-            "This is a desk. There is a book on it", 
+        Item table = new Item(
+            "table", 
+            "It's made of oak. There is a book on it", 
             false, 
             false, 
             false
         );
         Item book = new Item(
             "book", 
-            "This is a book", 
+            "You read the title. It says 'If you are reading this, you are a nerd'.", 
             false, 
             false, 
             true
         );
+        Item iron_maiden = new Item(
+            "iron_maiden", 
+            "Don't even try", 
+            false, 
+            false, 
+            false
+            );
         // Room 4 Items
         Item brew_rig = new Item(
             "brew rig",
@@ -150,12 +186,26 @@ public class RoomAdventure{ // Main class containing game logic
             false
         );
         Item six_pack = new Item(
-            "6 pack",
-            "This is a 6 pack of beer",
+            "6_pack",
+            "It's resting next to a brew rig. A little drinking never hurt anyone.",
             false,
             true,
             true
         );
+        Item empty_cans = new Item(
+            "empty_cans", 
+            "It looks like some lazybones was having a good time with another 6-pack.", 
+            false, 
+            false, 
+            false
+            );
+        Item broom = new Item(
+            "broom", 
+            "This is a broom. This isn't your house, so you don't need to clean.", 
+            false, 
+            false, 
+            true
+            );
 
 
         // ################################# Room 1 #################################
@@ -164,7 +214,7 @@ public class RoomAdventure{ // Main class containing game logic
         Room[] room1ExitDestinations = {room2, room4}; // Exit destinations for room 1
         room1.setExitDirections(room1ExitDirections); // Set exit directions for room 1
         room1.setExitDestinations(room1ExitDestinations); // Set exit destinations for room 1
-        room1.setItems(new Item[]{chair, desk, key}); // Set items for room 1
+        room1.setItems(new Item[]{chair, desk, key, plant, painting}); // Set items for room 1
 
         // ################################# Room 2 #################################
 
@@ -172,7 +222,7 @@ public class RoomAdventure{ // Main class containing game logic
         Room[] room2ExitDestinations = {room1, room3}; // Exit destinations for room 2
         room2.setExitDirections(room2ExitDirections); // Set exit directions for room 2
         room2.setExitDestinations(room2ExitDestinations); // Set exit destinations for room 2
-        room2.setItems(new Item[]{fireplace, rug, coal}); // Set items for room 2
+        room2.setItems(new Item[]{fireplace, rug, coal, shovel, couch}); // Set items for room 2
 
         // ################################# Room 3 #################################
 
@@ -180,7 +230,7 @@ public class RoomAdventure{ // Main class containing game logic
         Room[] room3ExitDestinations = {room2, room4}; // Exit destinations for room 3
         room3.setExitDirections(room3ExitDirections); // Set exit directions for room 3
         room3.setExitDestinations(room3ExitDestinations); // Set exit destinations for room 3
-        room3.setItems(new Item[]{bookshelves, statue, desk2, book}); // Set items for room 3
+        room3.setItems(new Item[]{bookshelves, statue, table, book, iron_maiden}); // Set items for room 3
 
          // ################################# Room 4 #################################
 
@@ -188,7 +238,7 @@ public class RoomAdventure{ // Main class containing game logic
         Room[] room4ExitDestinations = {room3, room1}; // Exit destinations for room 4
         room4.setExitDirections(room4ExitDirections); // Set exit directions for room 4
         room4.setExitDestinations(room4ExitDestinations); // Set exit destinations for room 4
-        room4.setItems(new Item[]{brew_rig, chest, six_pack}); // Set items for room 4
+        room4.setItems(new Item[]{brew_rig, chest, six_pack, empty_cans, broom}); // Set items for room 4
 
         // Set the current room to room 1
         currentRoom = room1; // Set the current room to room 1
