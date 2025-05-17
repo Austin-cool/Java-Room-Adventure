@@ -38,7 +38,31 @@ public class RoomAdventure{ // Main class containing game logic
             }
         }
     }
-            
+
+    //Tony- Handles the drink command
+    private static void handleDrink(String noun) {  // Handles eatable item within grabbables
+        // Checks if item in inventory is drinkable
+        for (int i = 0; i < inventory.length; i++) { // loop through the inventory
+            if (inventory[i] != null && inventory[i].equals(noun)) { //Check if in inventory
+                Item itemToDrink = null;
+                for (Item roomItem: currentRoom.getItems()) {
+                    if (roomItem.getItemName().equals(noun)) {
+                        itemToDrink = roomItem;
+                        break; // Break out of the loop
+                    }
+                }
+
+                if (itemToDrink != null && itemToDrink.getIsDrinkable()) {
+                    status = "You ate the " + noun + "."; // Update status
+                    inventory[i] = null; // Remove item from inventory
+                    currentRoom.removeItem(itemToDrink); // Remove item from room
+                } else {
+                    status = "You can't eat that."; //Update Status
+                }
+            break;
+            }
+        }
+    }        
       
         
 
@@ -142,6 +166,15 @@ public class RoomAdventure{ // Main class containing game logic
             true
         );
         // Room 3 Items
+        Item potion = new Item(
+            "potion", 
+            "This is a magic potion", 
+            false, 
+            true, 
+            true
+        );
+
+
         Item bookshelves = new Item(
             "bookshelves", 
             "There is nothing on it. Go figure.", 
@@ -216,7 +249,7 @@ public class RoomAdventure{ // Main class containing game logic
         Room[] room3ExitDestinations = {room2, room4}; // Exit destinations for room 3
         room3.setExitDirections(room3ExitDirections); // Set exit directions for room 3
         room3.setExitDestinations(room3ExitDestinations); // Set exit destinations for room 3
-        room3.setItems(new Item[]{bookshelves, statue, desk2, book}); // Set items for room 3
+        room3.setItems(new Item[]{bookshelves, statue, desk2, book, potion}); // Set items for room 3
 
          // ################################# Room 4 #################################
 
@@ -276,6 +309,9 @@ public class RoomAdventure{ // Main class containing game logic
                     break;
                 case "eat": 
                     handleEat(noun); // eat an item
+                    break;
+                case "drink":
+                    handleDrink(noun); // drink an item
                     break;
                 default: // if verb is not recognized
                     status = DEFUALT_STATUS; // Set status to default error message
