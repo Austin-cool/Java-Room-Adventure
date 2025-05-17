@@ -54,24 +54,12 @@ public class RoomAdventure{ // Main class containing game logic
         }
     }
 
-    // private static void handleUse(String noun) {
-    //     status = "I can't use that item";
-    //     for (int i = 0; i < inventory.length; i++){
-    //         if(noun.equals(inventory[i])){
-    //             Item[] items = currentRoom.getItems();
-    //             for (Item item : items) {
-    //                 if (item.getItemName() == "fireplace" && (noun == "coal")) {
-    //                     badEnding();
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 
 
-    // private static void badEnding(){
-    //     System.out.println("Game over, YOU LOST!");
-    // }
+
+    private static void badEnding(){
+        System.out.println("\nYou fed the meager flame.\n\nYOU FOOL! You gave the flame exactly what it wanted. The flame grows faster than your sense of terror and envelopes the entire room. The entire building is engulfed, and you perish. GAME OVER!");
+    }
 
 
 
