@@ -55,12 +55,15 @@ public class RoomAdventure{ // Main class containing game logic
     }
 
     private static void setupGame() { //init game world
-        RoomAdventure adventure = new RoomAdventure(); // Create a new instance of the game
-        Room room1 = adventure.new Room("Room 1"); // Create room 1
-        Room room2 = adventure.new Room("Room 2"); // Create room 2
+        Room room1 = new Room("Room 1"); // Create room 1
+        Room room2 = new Room("Room 2"); // Create room 2
+        Room room3 = new Room("Room 3"); // Create room 3
+        Room room4 = new Room("Room 4"); // Create room 4
+
+        // ################################# Room 1 #################################
         
-        String[] room1ExitDirections = {"east"}; // Exit directions for room 1
-        Room[] room1ExitDestinations = {room2}; // Exit destinations for room 1
+        String[] room1ExitDirections = {"east", "south"}; // Exit directions for room 1
+        Room[] room1ExitDestinations = {room2, room4}; // Exit destinations for room 1
         String[] room1Items = {"chair", "desk"}; // Items in room 1
         String[] room1ItemDescriptions = {
             "A wooden chair", 
@@ -74,10 +77,10 @@ public class RoomAdventure{ // Main class containing game logic
         room1.setItemDescriptions(room1ItemDescriptions); // Set item descriptions for room 1
         room1.setGrabbables(room1Grabbables); // Set grabbables for room 1
 
-        // Room 2
+        // ################################# Room 2 #################################
         
-        String[] room2ExitDirections = {"west"}; // Exit directions for room 2
-        Room[] room2ExitDestinations = {room1}; // Exit destinations for room 2
+        String[] room2ExitDirections = {"west", "south"}; // Exit directions for room 2
+        Room[] room2ExitDestinations = {room1, room3}; // Exit destinations for room 2
         String[] room2Items = {"fireplace", "rug"}; // Items in room 2
         String[] room2ItemDescriptions = {
             "Its on fire",
@@ -89,6 +92,41 @@ public class RoomAdventure{ // Main class containing game logic
         room2.setItems(room2Items); // Set items for room 2
         room2.setItemDescriptions(room2ItemDescriptions); // Set item descriptions for room 2
         room2.setGrabbables(room2Grabbables); // Set grabbables for room 2
+
+        // ################################# Room 3 #################################
+
+        String[] room3ExitDirections = {"north", "west"}; // Exit directions for room 3
+        Room[] room3ExitDestinations = {room2, room4}; // Exit destinations for room 3
+        String[] room3Items = {"bookshelves", "statue", "desk"}; // Items in room 3
+        String[] room3ItemDescriptions = {
+            "They are empty. Go Figure.", 
+            "There is nothing special about it.",
+            "The statue is resting on it. So is a book."
+        }; // Item descriptions for room 3
+
+        String[] room3Grabbables = {"book"}; // items in room 3 you can take
+        room3.setExitDirections(room3ExitDirections); // Set exit directions for room 3
+        room3.setExitDestinations(room3ExitDestinations); // Set exit destinations for room 3
+        room3.setItems(room3Items); // Set items for room 3
+        room3.setItemDescriptions(room3ItemDescriptions); // Set item descriptions for room 3
+        room3.setGrabbables(room3Grabbables); // Set grabbables for room 3
+
+         // ################################# Room 4 #################################
+
+        String[] room4ExitDirections = {"east", "north"}; // Exit directions for room 4
+        Room[] room4ExitDestinations = {room3, room1}; // Exit destinations for room 4
+        String[] room4Items = {"brew_rig", "chest"}; // Items in room 4
+        String[] room4ItemDescriptions = {
+            "Gourd is brewing some sort of oatmeal stout on the brewrig. A 6-pack is resting beside it.", 
+            "It is made of a dark oak. It is locked. Maybe USE a key to open it."
+        }; // Item descriptions for room 4
+
+        String[] room4Grabbables = {"6-pack"}; // items in room 4 you can take
+        room4.setExitDirections(room4ExitDirections); // Set exit directions for room 4
+        room4.setExitDestinations(room4ExitDestinations); // Set exit destinations for room 4
+        room4.setItems(room4Items); // Set items for room 4
+        room4.setItemDescriptions(room4ItemDescriptions); // Set item descriptions for room 4
+        room4.setGrabbables(room4Grabbables); // Set grabbables for room 4
 
         // Set the current room to room 1
         currentRoom = room1; // Set the current room to room 1
@@ -139,11 +177,8 @@ public class RoomAdventure{ // Main class containing game logic
             System.out.println(status); // Print the status message
     
         }
-
-
-
     }
-
+}
 class Room{ // Represents a game room
     private String name; // Room name
     private String[] exitDirections; // Directions you can go to exit  
@@ -215,6 +250,3 @@ class Room{ // Represents a game room
         return result + "\n"; //Return the full result
     }
 }
-
-}
-
