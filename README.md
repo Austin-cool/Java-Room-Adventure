@@ -20,7 +20,6 @@ Added Functionalities:
         - drink command    
         - use command    
         - achievements     
-        - achievements    
     Austin:  
         - more words for each command (adds flexibility for user)  
         - add more items 
