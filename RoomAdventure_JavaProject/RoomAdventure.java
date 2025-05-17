@@ -306,14 +306,17 @@ public class RoomAdventure{ // Main class containing game logic
                     break;
                 
                 case "end":  // If verb is end
+                    s.close();
                     System.out.println("Closing game...");
                     RUNNING = false;
                     break;
                 case "leave":  // If verb is leave
+                    s.close();
                     System.out.println("Closing game...");
                     RUNNING = false;
                     break;
                 case "close":  // If verb is close
+                    s.close();
                     System.out.println("Closing game...");
                     RUNNING = false;
                     break;
