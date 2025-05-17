@@ -22,27 +22,25 @@ public class RoomAdventure{ // Main class containing game logic
                 currentRoom = exitDestinations[i]; // Move to the new room
                 status = "Changed Room "; // Update Status
             }
-
         }
-
     }
 
     private static void handlelook(String noun) { // Handles looking at items
-        String[] items = currentRoom.getItems(); // Get the items in the room
-        String[] itemDescriptions = currentRoom.getItemDescriptions(); // Get the item descriptions
+        Item[] items = currentRoom.getItems(); // Get the items in the room
         status = "I don't see that item."; // Default if the item is not found
-        for (int i = 0; i < items.length; i++) { // Loop through the items
-            if (noun.equals(items[i])) { // Check if the item is valid
-                status = itemDescriptions[i]; // Update status with description
+        for (Item item : items) { // Loop through the items
+            if (noun.equals(item.getItemName())) { // Check if the item is valid
+                status = item.getItemDescription();// Update status with description
+                break; 
             }
         }
     }
 
     private static void handleTake(String noun) { // Handles taking items
-        String[] grabbables = currentRoom.getGrabbables(); // Items that can be taken
+        Item[] items = currentRoom.getItems(); // Items that can be taken
         status = "I cant take that item."; // Default if the item is not grabbable
-        for (String item: grabbables){ // Loop through the grabbables
-            if (noun.equals(item)) { // Check if the item is valid
+        for (Item item : items){ // Loop through the grabbables
+            if (noun.equals(item.getItemName()) && item.getIsGrabbable()) { // Check if the item is valid
                 for (int j = 0; j < inventory.length; j++) { // Loop through the inventory
                     if (inventory[j] == null) { // Check for empty slot
                         inventory[j] = noun; // Add item to inventory
@@ -54,83 +52,180 @@ public class RoomAdventure{ // Main class containing game logic
         }
     }
 
+    private static void handleUse(String noun) { // Handles using items
+        status = "I cant use that item."; // Default if the item is not usable 
+        for (int i = 0; i < inventory.length; i++) { // Loop through the inventory slots
+            if (noun.equals(inventory[i])) { // Check if the item is valid
+                Item[] items = currentRoom.getItems(); // Get the items in the room
+                for (Item item : items) { // Loop through the items
+                    if (item.getItemName().equals("fireplace") && noun.equals("coal")) { // Check if the item is valid
+                        status = "THE HOUSE IS BURNING";
+                        break; // Break out of the loop
+                    }
+                    if (item.getItemName().equals("chest") && noun.equals("key")) { // Check if the item is valid
+                        status = "Chest Unlocked";
+                        break; // Break out of the loop
+                    }
+                }
+            }
+        }
+    }
+
+
     private static void setupGame() { //init game world
         Room room1 = new Room("Room 1"); // Create room 1
         Room room2 = new Room("Room 2"); // Create room 2
         Room room3 = new Room("Room 3"); // Create room 3
         Room room4 = new Room("Room 4"); // Create room 4
+        Room room5 = new Room("Room 5"); // Create room 5
 
+        // Room 1 Items
+        Item chair = new Item(
+            "chair", 
+            "This is a chair", 
+            false, 
+            false, 
+            false
+        );
+        Item desk = new Item(
+            "desk",
+            "This is a desk", 
+            false, 
+            false, 
+            false
+        );
+        Item key = new Item(
+            "key", 
+            "This is a key", 
+            false, 
+            false, 
+            true
+        );
+        // Room 2 Items
+        Item fireplace = new Item(
+            "fireplace",
+            "Its on fire", 
+            false, 
+            false, 
+            false
+        );
+        Item rug = new Item(
+            "rug", 
+            "theres a lump of coal on the rug", 
+            false, 
+            false, 
+            false
+        );
+        Item coal = new Item(
+            "coal", 
+            "This is coal", 
+            false, 
+            false, 
+            true
+        );
+        // Room 3 Items
+        Item bookshelves = new Item(
+            "bookshelves", 
+            "There is nothing on it. Go figure.", 
+            false, 
+            false, 
+            true
+        );
+        Item statue = new Item(
+            "statue",
+            "This is a statue", 
+            false, 
+            false, 
+            false
+        );
+        Item desk2 = new Item(
+            "desk", 
+            "This is a desk. There is a book on it", 
+            false, 
+            false, 
+            false
+        );
+        Item book = new Item(
+            "book", 
+            "This is a book", 
+            false, 
+            false, 
+            true
+        );
+        // Room 4 Items
+        Item brew_rig = new Item(
+            "brew_rig",
+             "Gourd is brewing some sort of oatmeal stout on the brewrig. A 6-pack is resting beside it.", 
+             false, 
+             false, 
+             false
+             );
+        Item chest = new Item(
+            "chest",
+            "It is made of a dark oak. It is locked. Maybe USE a key to open it.",
+            false,
+            false,
+            false
+        );
+        Item six_pack = new Item(
+            "6_pack",
+            "This is a 6 pack of beer",
+            false,
+            true,
+            true
+        );
+        // Room 5 Items
+        Item stairs = new Item(
+            "stairs",
+            "There is a staircase heading to another room upstairs, but you are too big.",
+            false,
+            false,
+            false
+        );
         // ################################# Room 1 #################################
-        
-        String[] room1ExitDirections = {"east", "south"}; // Exit directions for room 1
-        Room[] room1ExitDestinations = {room2, room4}; // Exit destinations for room 1
-        String[] room1Items = {"chair", "desk"}; // Items in room 1
-        String[] room1ItemDescriptions = {
-            "A wooden chair", 
-            "A wooden desk"
-        }; // Item descriptions for room 1
 
-        String[] room1Grabbables = {"key"}; // items in room 1 you can take
+        String[] room1ExitDirections = {"east", "south", "up"}; // Exit directions for room 1
+        Room[] room1ExitDestinations = {room2, room4, room5}; // Exit destinations for room 1
         room1.setExitDirections(room1ExitDirections); // Set exit directions for room 1
         room1.setExitDestinations(room1ExitDestinations); // Set exit destinations for room 1
-        room1.setItems(room1Items); // Set items for room 1
-        room1.setItemDescriptions(room1ItemDescriptions); // Set item descriptions for room 1
-        room1.setGrabbables(room1Grabbables); // Set grabbables for room 1
+        room1.setItems(new Item[]{chair, desk, key, stairs}); // Set items for room 1
 
         // ################################# Room 2 #################################
-        
-        String[] room2ExitDirections = {"west", "south"}; // Exit directions for room 2
-        Room[] room2ExitDestinations = {room1, room3}; // Exit destinations for room 2
-        String[] room2Items = {"fireplace", "rug"}; // Items in room 2
-        String[] room2ItemDescriptions = {
-            "Its on fire",
-            "theres a lump of coal on the rug"
-        }; // Item descriptions for room 2
-        String[] room2Grabbables = {"coal"}; // items in room 2 you can take
+
+        String[] room2ExitDirections = {"west", "south", "up"}; // Exit directions for room 2
+        Room[] room2ExitDestinations = {room1, room3, room5}; // Exit destinations for room 2
         room2.setExitDirections(room2ExitDirections); // Set exit directions for room 2
         room2.setExitDestinations(room2ExitDestinations); // Set exit destinations for room 2
-        room2.setItems(room2Items); // Set items for room 2
-        room2.setItemDescriptions(room2ItemDescriptions); // Set item descriptions for room 2
-        room2.setGrabbables(room2Grabbables); // Set grabbables for room 2
+        room2.setItems(new Item[]{fireplace, rug, coal, stairs}); // Set items for room 2
 
         // ################################# Room 3 #################################
 
-        String[] room3ExitDirections = {"north", "west"}; // Exit directions for room 3
-        Room[] room3ExitDestinations = {room2, room4}; // Exit destinations for room 3
-        String[] room3Items = {"bookshelves", "statue", "desk"}; // Items in room 3
-        String[] room3ItemDescriptions = {
-            "They are empty. Go Figure.", 
-            "There is nothing special about it.",
-            "The statue is resting on it. So is a book."
-        }; // Item descriptions for room 3
-
-        String[] room3Grabbables = {"book"}; // items in room 3 you can take
+        String[] room3ExitDirections = {"north", "west", "up"}; // Exit directions for room 3
+        Room[] room3ExitDestinations = {room2, room4, room5}; // Exit destinations for room 3
         room3.setExitDirections(room3ExitDirections); // Set exit directions for room 3
         room3.setExitDestinations(room3ExitDestinations); // Set exit destinations for room 3
-        room3.setItems(room3Items); // Set items for room 3
-        room3.setItemDescriptions(room3ItemDescriptions); // Set item descriptions for room 3
-        room3.setGrabbables(room3Grabbables); // Set grabbables for room 3
+        room3.setItems(new Item[]{bookshelves, statue, desk2, book, stairs}); // Set items for room 3
 
          // ################################# Room 4 #################################
 
-        String[] room4ExitDirections = {"east", "north"}; // Exit directions for room 4
-        Room[] room4ExitDestinations = {room3, room1}; // Exit destinations for room 4
-        String[] room4Items = {"brew_rig", "chest"}; // Items in room 4
-        String[] room4ItemDescriptions = {
-            "Gourd is brewing some sort of oatmeal stout on the brewrig. A 6-pack is resting beside it.", 
-            "It is made of a dark oak. It is locked. Maybe USE a key to open it."
-        }; // Item descriptions for room 4
-
-        String[] room4Grabbables = {"6-pack"}; // items in room 4 you can take
+        String[] room4ExitDirections = {"east", "north", "up"}; // Exit directions for room 4
+        Room[] room4ExitDestinations = {room3, room1, room5}; // Exit destinations for room 4
         room4.setExitDirections(room4ExitDirections); // Set exit directions for room 4
         room4.setExitDestinations(room4ExitDestinations); // Set exit destinations for room 4
-        room4.setItems(room4Items); // Set items for room 4
-        room4.setItemDescriptions(room4ItemDescriptions); // Set item descriptions for room 4
-        room4.setGrabbables(room4Grabbables); // Set grabbables for room 4
+        room4.setItems(new Item[]{brew_rig, chest, six_pack, stairs}); // Set items for room 4
+
+        // ################################# Room 5 #################################
+
+        String[] room5ExitDirections = {"room1", "room2", "room3", "room4"}; // Exit directions for room 5
+        Room[] room5ExitDestinations = {room1, room2, room3, room4}; // Exit destinations for room 5
+        room5.setExitDirections(room5ExitDirections); // Set exit directions for room 5
+        room5.setExitDestinations(room5ExitDestinations); // Set exit destinations for room 5
+        room5.setItems(new Item[]{chest}); // Set items for room 5
 
         // Set the current room to room 1
         currentRoom = room1; // Set the current room to room 1
     }
+
 
     // @SuppressWarnings("java:52189") // Suppress warning for Scanner
     public static void main(String[] args) { //Entry point of the game
@@ -171,6 +266,9 @@ public class RoomAdventure{ // Main class containing game logic
                 case "take": // if verb is take
                     handleTake(noun); // take an item
                     break;
+                case "use": // if verb is use
+                    handleUse(noun); // use an item
+                    break;
                 case "end":  // If verb is end
                     System.out.println("Closing game...");
                     RUNNING = false;
@@ -183,15 +281,18 @@ public class RoomAdventure{ // Main class containing game logic
             System.out.println(status); // Print the status message
     
         }
+
+
+
     }
 }
+
 class Room{ // Represents a game room
     private String name; // Room name
     private String[] exitDirections; // Directions you can go to exit  
     private Room[] exitDestinations; // Rooms reached by each direciton 
-    private String[] items; // Items visible in each room 
-    private String[] itemDescriptions; // Descriptions of items
-    private String[] grabbables; // Items you can take
+    private Item[] items; // Items visible in each room 
+
 
 
     public Room(String name) { // Constructor for room
@@ -215,39 +316,19 @@ class Room{ // Represents a game room
         return exitDirections; // Return the exit directions
     }
 
-    public void setItems(String[] items){ // Setter for items
+    public void setItems(Item[] items){ // Setter for items
         this.items = items; // Set the items
     }
 
-    public String[] getItems(){ // Getter for items
+    public Item[] getItems(){ // Getter for items
         return items; // Return the items
     }
 
-    public void setItemDescriptions(String[] itemDescriptions){ // Setter for item descriptions
-        this.itemDescriptions = itemDescriptions; // Set the item descriptions
-    }
-
-    public String[] getItemDescriptions(){ // Getter for item descriptions
-        return itemDescriptions; // Return the item descriptions
-    }
-
-    public void setGrabbables(String[] grabbables){ // Setter for grabbables
-        this.grabbables = grabbables; // Set the grabbables
-    }
-
-    public String[] getGrabbables(){ // Getter for grabbables
-        return grabbables; // Return the grabbables
-    }
-
-// NOTE TO SELF: public void ...(type, varible){ // Setters
-// NOTE TO SELF: public type get...(type, varible){ // Getters
-
-    // @Override 
     public String toString(){ // Custom print for the room
         String result = "\nLocation: " + name; //Show room name
         result += "\nYou See: "; // Show what you see
-        for (String item : items){ //Loop items
-            result += item + " "; // apend each item
+        for (Item item : items){ //Loop items
+            result += item.getItemName() + " "; // apend each item
             }
         result += "\nExits: "; // List exits
         for (String direction : exitDirections) { // Loop exits
@@ -255,4 +336,66 @@ class Room{ // Represents a game room
         }
         return result + "\n"; //Return the full result
     }
+}
+
+
+
+class Item {
+    private String name;
+    private String description;
+    private boolean isEatable;
+    private boolean isDrinkable;
+    private boolean isGrabbable;
+
+    // constructor
+    public Item(String name, String description, boolean isEatable, boolean isDrinkable, boolean isGrabbable){
+        this.name = name;
+        this.description = description;
+        this.isEatable = isEatable;
+        this.isDrinkable = isDrinkable;
+        this.isGrabbable = isGrabbable;
+    }
+
+
+    // getters and setters
+     public String getItemName(){ 
+        return name; 
+    }
+
+    public void setItemName(String name){ 
+        this.name = name; 
+    }
+
+    public String getItemDescription(){ 
+        return description;
+    }
+
+    public void setItemDescriptions(String description){ 
+        this.description = description; 
+    }
+
+    public boolean getIsEatable(){
+        return isEatable;
+    }
+
+    public void setIsEatable(boolean isEatable){
+        this.isEatable = isEatable;
+    }
+
+    public boolean getIsDrinkable(){
+        return isDrinkable;
+    }
+
+    public void setIsDrinkable(boolean isDrinkable){
+        this.isDrinkable = isDrinkable;
+    }
+
+         public boolean getIsGrabbable(){ 
+        return isGrabbable; 
+    }
+
+    public void setIsGrabbable(boolean isGrabbable){ 
+        this.isGrabbable = isGrabbable; 
+    }
+
 }
