@@ -62,23 +62,78 @@ public class RoomAdventure{ // Main class containing game logic
         Room room4 = new Room("Room 4"); // Create room 4
 
         // Room 1 Items
-        Item chair = new Item("chair", "This is a chair", false, false, false);
-        Item desk = new Item("desk", "This is a desk", false, false, false);
-        Item key = new Item("key", "This is a key", false, false, true);
+        Item chair = new Item(
+            "chair", 
+            "This is a chair", 
+            false, 
+            false, 
+            false
+        );
+        Item desk = new Item(
+            "desk",
+            "This is a desk", 
+            false, 
+            false, 
+            false
+        );
+        Item key = new Item(
+            "key", 
+            "This is a key", 
+            false, 
+            false, 
+            true
+        );
         // Room 2 Items
         Item fireplace = new Item(
             "fireplace",
             "This is a fireplace", 
             false, 
             false, 
-            false);
-        Item rug = new Item("rug", "This is a rug", false, false, false);
-        Item coal = new Item("coal", "This is coal", false, false, true);
+            false
+        );
+        Item rug = new Item(
+            "rug", 
+            "This is a rug", 
+            false, 
+            false, 
+            false
+        );
+        Item coal = new Item(
+            "coal", 
+            "This is coal", 
+            false, 
+            false, 
+            true
+        );
         // Room 3 Items
-        Item bookshelves = new Item("bookshelves", "There is a book on one of the shelves", false, false, true);
-        Item statue = new Item("statue", "This is a statue", false, false, false);
-        Item desk2 = new Item("desk", "This is a desk", false, false, false);
+        Item bookshelves = new Item(
+            "bookshelves", 
+            "There is a book on one of the shelves", 
+            false, 
+            false, 
+            true
+        );
+        Item statue = new Item(
+            "statue",
+            "This is a statue", 
+            false, 
+            false, 
+            false
+        );
+        Item desk2 = new Item(
+            "desk", 
+            "This is a desk", 
+            false, 
+            false, 
+            false
+        );
         Item book = new Item(
+            "book", 
+            "This is a book", 
+            false, 
+            false, 
+            true
+        );
         // Room 4 Items
 
         // ################################# Room 1 #################################
