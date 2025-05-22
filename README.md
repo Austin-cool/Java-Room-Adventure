@@ -4,12 +4,10 @@ Instructions:
     - type "go (cardinal direction)" to change rooms
     - type "look (item)" to get item description
     - type "take (item)" to add it to your inventory
+    - type "eat (item)" to eat the item
+    - type "drink (item)" to drink the item
+    - type "use (item) to use the item
     - type "end game" to end the game
-
-
-
-
-
 
 
 
