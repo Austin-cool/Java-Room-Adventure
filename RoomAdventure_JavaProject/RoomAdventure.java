@@ -13,6 +13,38 @@ public class RoomAdventure{ // Main class containing game logic
     final private static String DEFUALT_STATUS =
         "Sorry, I do not understand. Try {verb} {noun}. Valid verbs include 'go', 'look', and 'take'. Type 'end game' to end game. "; //Defualt error message
 
+    //-Tony Handle the use command-STOPPING POINT
+    private static void handleUse(String noun) {
+    for (int i = 0; i < inventory.length; i++) {
+        if (inventory[i] != null && inventory[i].equals(noun)) { // Check inventory
+            for (Item roomItem : currentRoom.getItems()) { // Loop through items in the room
+                if (roomItem.getItemName().equals("chest") && noun.equals("key")) {
+                    // If the user uses a key on a chest, add a potion to their inventory
+                    inventory[i] = "potion"; // Remove key and add potion
+                    for (int j = 0; j < inventory.length; j++){
+                        if (inventory[j] == null) {
+                            inventory[j] = "mushroom"; // added mushroom to inventory
+                            break;
+                        }
+                    }
+                    currentRoom.removeItem(roomItem); // remove chest from room
+                    
+                    status = "You unlocked the chest, found a potion and mushroom!";
+                    return;
+                } else if (roomItem.getItemName().equals("fireplace") && noun.equals("coal")) {
+                    // If the user uses coal in a fireplace, pass for now
+                    status = "You used the coal in the fireplace.";
+                    return;
+                }
+            }
+            
+            status = "You can't use that here.";
+            return;
+        }
+    }
+    
+    status = "You don't have that item.";
+}
 
     //Tony- Handles the eat command    
     private static void handleEat(String noun) {  // Handles eatable item within grabbables
@@ -94,16 +126,19 @@ public class RoomAdventure{ // Main class containing game logic
 
     private static void handleTake(String noun) { // Handles taking items
         Item[] items = currentRoom.getItems(); // Items that can be taken
-        status = "I cant take that item."; // Default if the item is not grabbable
         for (Item item : items){ // Loop through the grabbables
             if (noun.equals(item.getItemName()) && item.getIsGrabbable()) { // Check if the item is valid
                 for (int j = 0; j < inventory.length; j++) { // Loop through the inventory
                     if (inventory[j] == null) { // Check for empty slot
                         inventory[j] = noun; // Add item to inventory
                         status = "Added it to your inventory."; // Update status
+                        // Remove item from the room
+                        currentRoom.removeItem(item); // Remove item from room
                         break; // Break out of the loop
                     }
                 }
+            }else {
+                status = "I cant take that item."; // Default if the item is not grabbable
             }
         }
     }
@@ -113,6 +148,30 @@ public class RoomAdventure{ // Main class containing game logic
         Room room2 = new Room("Room 2"); // Create room 2
         Room room3 = new Room("Room 3"); // Create room 3
         Room room4 = new Room("Room 4"); // Create room 4
+        // Room for hidden items
+
+        // Items not seen yet
+        // Must unlock chest to obtain potion
+        Item potion = new Item(
+            "potion", 
+            "This is a magic potion", 
+            false, 
+            true, 
+            true, 
+            false,
+            false
+        );
+
+        // Must look at desk to see mushroom
+        Item mushroom = new Item(
+            "mushroom", 
+            "This is a mushroom", 
+            true, 
+            false, 
+            true, 
+            false,
+            false
+        );
 
         // Room 1 Items
         Item apple = new Item(
@@ -120,13 +179,17 @@ public class RoomAdventure{ // Main class containing game logic
             "this is an apple",
             true, 
             false, 
-            true
+            true,
+            false,
+            false
         );
         Item chair = new Item(
             "chair", 
             "This is a chair", 
             false, 
             false, 
+            false, 
+            false,
             false
         );
         Item desk = new Item(
@@ -134,6 +197,8 @@ public class RoomAdventure{ // Main class containing game logic
             "This is a desk", 
             false, 
             false, 
+            false, 
+            false,
             false
         );
         Item key = new Item(
@@ -141,7 +206,9 @@ public class RoomAdventure{ // Main class containing game logic
             "This is a key", 
             false, 
             false, 
-            true
+            true, 
+            true,
+            false
         );
         // Room 2 Items
         Item fireplace = new Item(
@@ -149,6 +216,8 @@ public class RoomAdventure{ // Main class containing game logic
             "Its on fire", 
             false, 
             false, 
+            false, 
+            false,
             false
         );
         Item rug = new Item(
@@ -156,6 +225,8 @@ public class RoomAdventure{ // Main class containing game logic
             "theres a lump of coal on the rug", 
             false, 
             false, 
+            false, 
+            false,
             false
         );
         Item coal = new Item(
@@ -163,30 +234,28 @@ public class RoomAdventure{ // Main class containing game logic
             "This is coal", 
             false, 
             false, 
-            true
+            true, 
+            true,
+            false
         );
         // Room 3 Items
-        Item potion = new Item(
-            "potion", 
-            "This is a magic potion", 
-            false, 
-            true, 
-            true
-        );
-
 
         Item bookshelves = new Item(
             "bookshelves", 
             "There is nothing on it. Go figure.", 
             false, 
             false, 
-            true
+            true, 
+            false,
+            false
         );
         Item statue = new Item(
             "statue",
             "This is a statue", 
             false, 
             false, 
+            false, 
+            false,
             false
         );
         Item desk2 = new Item(
@@ -194,6 +263,8 @@ public class RoomAdventure{ // Main class containing game logic
             "This is a desk. There is a book on it", 
             false, 
             false, 
+            false, 
+            false,
             false
         );
         Item book = new Item(
@@ -201,29 +272,41 @@ public class RoomAdventure{ // Main class containing game logic
             "This is a book", 
             false, 
             false, 
-            true
+            true, 
+            false,
+            false
         );
         // Room 4 Items
         Item brew_rig = new Item(
             "brew rig",
-             "Gourd is brewing some sort of oatmeal stout on the brewrig. A 6-pack is resting beside it.", 
-             false, 
-             false, 
-             false
-             );
+            "Gourd is brewing some sort of oatmeal stout on the brewrig. A 6-pack is resting beside it.", 
+            false, 
+            false, 
+            false, 
+            false,
+            false
+            );
         Item chest = new Item(
             "chest",
             "It is made of a dark oak. It is locked. Maybe USE a key to open it.",
             false,
             false,
-            false
+            false,
+            false,
+            true
         );
+
+        // creating an Item within the Chest
+
+
         Item six_pack = new Item(
             "6 pack",
             "This is a 6 pack of beer",
             false,
             true,
-            true
+            true,
+            false,
+            false
         );
 
 
@@ -249,7 +332,7 @@ public class RoomAdventure{ // Main class containing game logic
         Room[] room3ExitDestinations = {room2, room4}; // Exit destinations for room 3
         room3.setExitDirections(room3ExitDirections); // Set exit directions for room 3
         room3.setExitDestinations(room3ExitDestinations); // Set exit destinations for room 3
-        room3.setItems(new Item[]{bookshelves, statue, desk2, book, potion}); // Set items for room 3
+        room3.setItems(new Item[]{bookshelves, statue, desk2, book}); // Set items for room 3
 
          // ################################# Room 4 #################################
 
@@ -312,6 +395,9 @@ public class RoomAdventure{ // Main class containing game logic
                     break;
                 case "drink":
                     handleDrink(noun); // drink an item
+                    break;
+                case "use": // if verb is use
+                    handleUse(noun); // use an item
                     break;
                 default: // if verb is not recognized
                     status = DEFUALT_STATUS; // Set status to default error message
@@ -413,14 +499,19 @@ class Item {
     private boolean isEatable;
     private boolean isDrinkable;
     private boolean isGrabbable;
+    private boolean isUsable;
+    private boolean requiresKey;
 
     // constructor
-    public Item(String name, String description, boolean isEatable, boolean isDrinkable, boolean isGrabbable){
+    public Item(String name, String description, boolean isEatable, boolean isDrinkable, boolean isGrabbable, boolean isUsable, boolean requiresKey) {
         this.name = name;
         this.description = description;
         this.isEatable = isEatable;
         this.isDrinkable = isDrinkable;
         this.isGrabbable = isGrabbable;
+        this.isUsable = false; // Default to false
+        this.requiresKey = false; // Default to false
+        
     }
 
 
@@ -457,7 +548,7 @@ class Item {
         this.isDrinkable = isDrinkable;
     }
 
-         public boolean getIsGrabbable(){ 
+    public boolean getIsGrabbable(){ 
         return isGrabbable; 
     }
 
@@ -465,17 +556,17 @@ class Item {
         this.isGrabbable = isGrabbable; 
     }
 
+    public boolean getIsUsable(){ 
+        return isUsable; 
+    }
+    public void setIsUsable(boolean isUsable){ 
+        this.isUsable = isUsable; 
+    }
+    public boolean getRequiresKey(){ 
+        return requiresKey; 
+    }
+    public void setRequiresKey(boolean requiresKey){ 
+        this.requiresKey = requiresKey; 
+    }
+
 }
-
-
-/*
- * Possible code for verb-take:
- * Item itemToTake = null;
-                    for (Item item : currentRoom.getItems()) { 
-                        if (item != null && item.getItemName().equals(noun)); {
-                            itemToTake = item;
-                            break;
-                        }// take an item
-                    }
- * 
- */
