@@ -18,8 +18,7 @@ Added Functionalities:
     TONY:
         - Eat command  
         - drink command    
-        - use command    
-        - achievements     
+        - use command     
     Austin:  
         - more words for each command (adds flexibility for user)  
         - add more items 
