@@ -5,7 +5,7 @@ public class RoomAdventure{ // Main class containing game logic
     
     // class Varibles
     private static Room currentRoom; // Current room for player
-    private static String[] inventory = {null, null, null, null, null}; // Player inventory
+    private static String[] inventory = {null, null, null, null, null, null, null, null}; // Player inventory
     private static String status; // Message to display after each action
     
     
@@ -342,7 +342,7 @@ public class RoomAdventure{ // Main class containing game logic
             true
         );
         Item six_pack = new Item(
-            "6 pack",
+            "6_pack",
             "It's resting next to a brew rig. A little drinking never hurt anyone.",
             false,
             true,
